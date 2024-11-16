@@ -33,9 +33,9 @@ func (c *AppCircuit) Define(api *sdk.CircuitAPI, in sdk.DataInput) error {
 	sdk.AssertEach(receipts, func(r sdk.Receipt) sdk.Uint248 {
 		assertionPassed := api.Uint248.And(
 			/* Here we iterate over Transfer events. Fields explanation:
-			* 0. Field 0 checks that the "from" is the user.
-			* 1. Field 1 does simple sybil resistance and checks that the user didn't send the token to themselves.
-			* 2. Field 2 contains the amount that the user sent.
+			* 0. Field 0 - topic1 checks that the "from" is the user.
+			* 1. Field 1 - topic2 does simple sybil resistance and checks that the user didn't send the token to themselves.
+			* 2. Field 2 - data contains the amount that the user sent.
 			*/
 			/////////////////////    Field 0    //////////////////////////////
 			api.Uint248.IsEqual(r.Fields[0].Contract, GHOTokenAddr),
