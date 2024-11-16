@@ -9,7 +9,7 @@ import (
 )
 
 func TestCircuit(t *testing.T) {
-	rpc := "RPC_URL"
+	rpc := "https://eth.llamarpc.com"
 	localDir := "$HOME/circuitOut/myBrevisApp"
 	app, err := sdk.NewBrevisApp(1, rpc, localDir)
 	check(err)
