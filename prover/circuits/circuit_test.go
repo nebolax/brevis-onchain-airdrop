@@ -14,16 +14,43 @@ func TestCircuit(t *testing.T) {
 	app, err := sdk.NewBrevisApp(1, rpc, localDir)
 	check(err)
 
-	txHash := common.HexToHash(
-		"0x8a7fc50330533cd0adbf71e1cfb51b1b6bbe2170b4ce65c02678cf08c8b17737")
+	// Sample transaction hashes with GHO transfers
+	txHash1 := common.HexToHash("0x92e3811a8e1ec01de6fbfbbf40b5f0c341e515531b1cc2978318b3265ad577ae")
+	txHash2 := common.HexToHash("0x48d7d0438831cac20721585d4a6f3a016d4db6a2a81f4e1e375030c06ab2e4c4")
 
 	app.AddReceipt(sdk.ReceiptData{
-		TxHash: txHash,
+		TxHash: txHash1,
 		Fields: []sdk.LogFieldData{
 			{
 				IsTopic:    true,
 				LogPos:     0,
 				FieldIndex: 1,
+			},
+			{
+				IsTopic:    true,
+				LogPos:     0,
+				FieldIndex: 2,
+			},
+			{
+				IsTopic:    false,
+				LogPos:     0,
+				FieldIndex: 0,
+			},
+		},
+	})
+
+	app.AddReceipt(sdk.ReceiptData{
+		TxHash: txHash2,
+		Fields: []sdk.LogFieldData{
+			{
+				IsTopic:    true,
+				LogPos:     0,
+				FieldIndex: 1,
+			},
+			{
+				IsTopic:    true,
+				LogPos:     0,
+				FieldIndex: 2,
 			},
 			{
 				IsTopic:    false,
