@@ -12,9 +12,7 @@ import (
 * 1. Checks how many times the user has sent the token.
  */
 
-type AppCircuit struct{
-	UserAddr sdk.Uint248
-}
+type AppCircuit struct{}
 
 var GHOTokenAddr = sdk.ConstUint248("0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f")
 var TransferTopic = sdk.ParseEventID(
@@ -28,8 +26,9 @@ func (c *AppCircuit) Allocate() (maxReceipts, maxStorage, maxTransactions int) {
 
 func (c *AppCircuit) Define(api *sdk.CircuitAPI, in sdk.DataInput) error {
 	receipts := sdk.NewDataStream(api, in.Receipts)
+	userAddr := api.ToUint248(sdk.GetUnderlying(receipts, 0).Fields[0].Value)
 
-	// Assert that these are Transfer events of the GHO token where UserAddr sends the token
+	// Assert that these are Transfer events of the GHO token where userAddr sends the token
 	sdk.AssertEach(receipts, func(r sdk.Receipt) sdk.Uint248 {
 		assertionPassed := api.Uint248.And(
 			/* Here we iterate over Transfer events. Fields explanation:
@@ -42,13 +41,13 @@ func (c *AppCircuit) Define(api *sdk.CircuitAPI, in sdk.DataInput) error {
 			api.Uint248.IsEqual(r.Fields[0].IsTopic, sdk.ConstUint248(1)), // has to be a topic (not event data)
 			api.Uint248.IsEqual(r.Fields[0].EventID, TransferTopic), // has to be a transfer event
 			api.Uint248.IsEqual(r.Fields[0].Index, sdk.ConstUint248(1)), // has to be topic1 = the sender of the token
-			api.Uint248.IsEqual(api.ToUint248(r.Fields[0].Value), c.UserAddr), // check that the sender here is the user address
+			api.Uint248.IsEqual(api.ToUint248(r.Fields[0].Value), userAddr), // check that the sender here is the user address
 			/////////////////////    Field 1    //////////////////////////////
 			api.Uint248.IsEqual(r.Fields[1].Contract, GHOTokenAddr),
 			api.Uint248.IsEqual(r.Fields[1].IsTopic, sdk.ConstUint248(1)), // has to be a topic (not event data)
 			api.Uint248.IsEqual(r.Fields[1].EventID, TransferTopic), // has to be a transfer event
 			api.Uint248.IsEqual(r.Fields[1].Index, sdk.ConstUint248(2)), // has to be topic2 = the recipient of the token
-			api.Uint248.IsEqual(api.ToUint248(r.Fields[0].Value), c.UserAddr), // check that the user didn't send the token to themselves
+			api.Uint248.IsEqual(api.ToUint248(r.Fields[0].Value), userAddr), // check that the user didn't send the token to themselves
 			/////////////////////    Field 2    //////////////////////////////
 			api.Uint248.IsEqual(r.Fields[2].Contract, GHOTokenAddr),
 			api.Uint248.IsEqual(r.Fields[2].IsTopic, sdk.ConstUint248(0)), // has to be event data
@@ -81,7 +80,7 @@ func (c *AppCircuit) Define(api *sdk.CircuitAPI, in sdk.DataInput) error {
 
 	// transfersCount := sdk.Count(receipts)
 
-	// api.OutputAddress(c.UserAddr)
+	// api.OutputAddress(userAddr)
 	// api.OutputUint(248, transfersCount)
 	// api.OutputUint(248, totalSent)
 	// api.OutputUint(248, earliestTransferBlock)
