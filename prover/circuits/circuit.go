@@ -7,7 +7,7 @@ import (
 type AppCircuit struct{}
 
 var USDCTokenAddr = sdk.ConstUint248("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")
-var minimumVolume = sdk.ConstUint248(600000000) // minimum 500 USDC
+var minimumVolume = sdk.ConstUint248(540000000) // minimum 500 USDC
 var _ sdk.AppCircuit = &AppCircuit{}
 
 func (c *AppCircuit) Allocate() (maxReceipts, maxStorage, maxTransactions int) {
