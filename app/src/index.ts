@@ -2,9 +2,10 @@ import { Brevis, ErrCode, ProofRequest, Prover, ReceiptData, Field } from 'brevi
 import { ethers, getDefaultProvider } from 'ethers';
 import { BrevisAbi } from './brevisAbi';
 
+// RealAave - 0x65f57e2d8247f4F4Adb4E0beF35801c01eba9dac
 const BrevisAddress = "0xa082F86d9d1660C29cf3f962A31d7D20E367154F"
 const GHOAddress = "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f"
-const AirdropContract = "0xFBfCC27D175F1cAAE97c8663CAbb4ddF8E424E21"
+const AirdropContract = "0xeCD9Ce940b5E8EC9bF5Cb9FAcA29CBE67c3d45DA"
 
 // Scoping block range because not all data is indexed on Brevis
 const StartBlock = 20000000 // Jun 1st

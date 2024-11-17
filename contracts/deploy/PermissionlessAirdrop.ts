@@ -11,7 +11,7 @@ const deployFunc: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
 
   const args: string[] = [
     '0xa082F86d9d1660C29cf3f962A31d7D20E367154F', // Sepolia Brevis Request Contract Address
-    "0x0000000000000000000000000000000000000000000000000000000000000000", // vkHash
+    "0x03f9041f4c20d53f676bfe1d206378da7fca264546767bf1c685c0c86d731c20", // vkHash
     "0x65f57e2d8247f4F4Adb4E0beF35801c01eba9dac", // airdroppingToken
   ]; 
   const deployment = await deploy('PermissionlessAirdrop', {
