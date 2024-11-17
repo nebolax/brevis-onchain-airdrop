@@ -4,6 +4,7 @@ import { BrevisAbi } from './brevisAbi';
 
 const BrevisAddress = "0xa082F86d9d1660C29cf3f962A31d7D20E367154F"
 const GHOAddress = "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f"
+const AirdropContract = "0xFBfCC27D175F1cAAE97c8663CAbb4ddF8E424E21"
 
 // Scoping block range because not all data is indexed on Brevis
 const StartBlock = 20000000 // Jun 1st
@@ -116,7 +117,7 @@ async function main() {
             brevisRes.queryKey.query_hash, // _proofId
             brevisRes.queryKey.nonce, // _nonce
             "0x0000000000000000000000000000000000000000", // _refundee
-            ["0x0604e0f2dcaE5Ad564C42857Af3287774f98AF99", 1000000], // callback address and callback gas
+            [AirdropContract, 1000000], // callback address and callback gas
             0 // always 0 - using zk-only circuit
         );
         const response = await wallet.sendTransaction(populatedTx)

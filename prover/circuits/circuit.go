@@ -2,7 +2,7 @@ package circuits
 
 import (
 	"github.com/brevis-network/brevis-sdk/sdk"
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	// "github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 /*
@@ -16,9 +16,9 @@ type AppCircuit struct{
 	// UserAddr sdk.Uint248
 }
 
-var GHOTokenAddr = sdk.ConstUint248("0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f")
-var TransferTopic = sdk.ParseEventID(
-	hexutil.MustDecode("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"))
+// var GHOTokenAddr = sdk.ConstUint248("0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f")
+// var TransferTopic = sdk.ParseEventID(
+// 	hexutil.MustDecode("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"))
 
 var _ sdk.AppCircuit = &AppCircuit{}
 
