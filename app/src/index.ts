@@ -56,12 +56,12 @@ async function main() {
     // Find transactions where the user has sent GHO
     const txHashes = await findGHOTransactions(userAddress);
 
-    // proofReq.setCustomInput({
-    //     UserAddr: {
-    //         type: "Uint248",
-    //         data: userAddress
-    //     }
-    // })
+    proofReq.setCustomInput({
+        UserAddr: {
+            type: "Uint248",
+            data: userAddress
+        }
+    })
     // txHashes.forEach((txHash) => proofReq.addReceipt(
     proofReq.addReceipt(
         new ReceiptData({

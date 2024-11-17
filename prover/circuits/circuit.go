@@ -58,19 +58,6 @@ func (c *AppCircuit) Define(api *sdk.CircuitAPI, in sdk.DataInput) error {
 		return assertionPassed
 	})
 
-	// Assert uniqueness of transfers by checking uniqueness of the block numbers
-	// (receipts have to be in chronological order)
-	blockNums := sdk.Map(receipts, func(r sdk.Receipt) sdk.Uint248 { return api.ToUint248(r.BlockNum) })
-	earliestTransferBlock := sdk.GetUnderlying(blockNums, 0)
-	sdk.Reduce(
-		blockNums,
-		sdk.ConstUint248(0),
-		func(prevBlockNum sdk.Uint248, curBlockNum sdk.Uint248) (newBlockNum sdk.Uint248) {
-			api.Uint248.AssertIsEqual(api.Uint248.IsLessThan(prevBlockNum, curBlockNum), sdk.ConstUint248(1))
-			return curBlockNum
-		},
-	)
-
 	// How much in total has the user sent
 	amounts := sdk.Map(receipts, func(r sdk.Receipt) sdk.Uint248 { return api.ToUint248(r.Fields[1].Value) } )
 	totalSent := sdk.Reduce(
@@ -84,7 +71,6 @@ func (c *AppCircuit) Define(api *sdk.CircuitAPI, in sdk.DataInput) error {
 	api.OutputAddress(c.UserAddr)
 	api.OutputUint(248, transfersCount)
 	api.OutputUint(248, totalSent)
-	api.OutputUint(248, earliestTransferBlock)
 
 	return nil
 }
