@@ -56,15 +56,16 @@ async function main() {
     // Find transactions where the user has sent GHO
     const txHashes = await findGHOTransactions(userAddress);
 
-    proofReq.setCustomInput({
-        UserAddr: {
-            type: "Uint248",
-            data: userAddress
-        }
-    })
-    txHashes.forEach((txHash) => proofReq.addReceipt(
+    // proofReq.setCustomInput({
+    //     UserAddr: {
+    //         type: "Uint248",
+    //         data: userAddress
+    //     }
+    // })
+    // txHashes.forEach((txHash) => proofReq.addReceipt(
+    proofReq.addReceipt(
         new ReceiptData({
-            tx_hash: txHash,
+            tx_hash: txHashes[0],
             fields: [
                 new Field({
                     log_pos: 0,
@@ -82,8 +83,31 @@ async function main() {
                     field_index: 0,
                 }),
             ],
-        }),
-    ))
+        })
+    );
+    // proofReq.addReceipt(
+    //     new ReceiptData({
+    //         tx_hash: txHashes[1],
+    //         fields: [
+    //             new Field({
+    //                 log_pos: 0,
+    //                 is_topic: true,
+    //                 field_index: 1,
+    //             }),
+    //             new Field({
+    //                 log_pos: 0,
+    //                 is_topic: true,
+    //                 field_index: 2,
+    //             }),
+    //             new Field({
+    //                 log_pos: 0,
+    //                 is_topic: false,
+    //                 field_index: 0,
+    //             }),
+    //         ],
+    //     })
+    // );
+    // ))
 
     console.log(`Sending prove request to the local circuit for ${userAddress}`)
     const proofRes = await prover.prove(proofReq);
