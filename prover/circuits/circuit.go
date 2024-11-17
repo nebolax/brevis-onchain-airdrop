@@ -23,7 +23,7 @@ var TransferTopic = sdk.ParseEventID(
 var _ sdk.AppCircuit = &AppCircuit{}
 
 func (c *AppCircuit) Allocate() (maxReceipts, maxStorage, maxTransactions int) {
-	return 32, 0, 0 // We are only checking receipts
+	return 4, 0, 0 // We are only checking receipts
 }
 
 func (c *AppCircuit) Define(api *sdk.CircuitAPI, in sdk.DataInput) error {
