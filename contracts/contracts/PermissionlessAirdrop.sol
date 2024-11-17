@@ -25,7 +25,7 @@ contract PermissionlessAirdrop is BrevisAppZkOnly {
         (
             address userAddr,
             uint256 transferCount,
-            uint256 totalSent,
+            uint256 totalSent
         ) = decodeOutput(_circuitOutput);
 
         // Calculate some airdrop-specific business logic.
