@@ -8,7 +8,6 @@ dotenv.config();
 
 const sepoliaEndpoint = process.env.SEPOLIA_ENDPOINT || 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
 const privateKey = process.env.PRIVATE_KEY || 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
-const bscTestEndpoint = process.env.BSC_TEST_ENDPOINT || 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
 
 const config: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
@@ -21,10 +20,6 @@ const config: HardhatUserConfig = {
       url: sepoliaEndpoint,
       accounts: [`0x${privateKey}`]
     },
-    bscTest: {
-      url: bscTestEndpoint,
-      accounts: [`0x${privateKey}`]
-    }
   },
   solidity: {
     version: '0.8.20',
@@ -38,7 +33,7 @@ const config: HardhatUserConfig = {
   },
   namedAccounts: {
     deployer: {
-      default: 0
+      default: "0xB38Bb847D9dC852B70d9ed539C87cF459812DA16"
     }
   },
   typechain: {
@@ -48,7 +43,6 @@ const config: HardhatUserConfig = {
   etherscan: {
     apiKey: {
       sepolia: process.env.ETHERSCAN_API_KEY as string,
-      bscTestnet: process.env.BSC_ETHERSCAN_API_KEY as string
     }
   }
 };
