@@ -58,7 +58,7 @@ async function main() {
     proofReq.setCustomInput({
         UserAddr: {
             type: "Uint248",
-            data: GHOAddress // UNDO
+            data: userAddress
         }
     })
     txHashes.forEach((txHash) => proofReq.addReceipt(
