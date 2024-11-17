@@ -64,7 +64,7 @@ func (c *AppCircuit) Define(api *sdk.CircuitAPI, in sdk.DataInput) error {
 	earliestTransferBlock := sdk.GetUnderlying(blockNums, 0)
 	sdk.Reduce(
 		blockNums,
-		earliestTransferBlock,
+		sdk.ConstUint248(0),
 		func(prevBlockNum sdk.Uint248, curBlockNum sdk.Uint248) (newBlockNum sdk.Uint248) {
 			api.Uint248.AssertIsEqual(api.Uint248.IsLessThan(prevBlockNum, curBlockNum), sdk.ConstUint248(1))
 			return curBlockNum
