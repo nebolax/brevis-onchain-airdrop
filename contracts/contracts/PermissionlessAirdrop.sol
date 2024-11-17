@@ -26,7 +26,6 @@ contract PermissionlessAirdrop is BrevisAppZkOnly {
             address userAddr,
             uint256 transferCount,
             uint256 totalSent,
-            uint256 earlisetTransferBlock
         ) = decodeOutput(_circuitOutput);
 
         // Calculate some airdrop-specific business logic.
@@ -42,20 +41,16 @@ contract PermissionlessAirdrop is BrevisAppZkOnly {
             points += 50;
         }
 
-        if (earlisetTransferBlock < 20000000) { // started sending GHO earlier than Jun 1st 2024
-            points += 100;
-        }
         uint256 amount = points * 5 * 1000000000000000000;
 
         IERC20(airdoppingToken).transfer(userAddr, amount);
         emit Airdropped(userAddr, airdoppingToken, amount);    
     }
 
-    function decodeOutput(bytes calldata o) internal pure returns (address, uint256, uint256, uint256) {
+    function decodeOutput(bytes calldata o) internal pure returns (address, uint256, uint256) {
         address userAddr = address(bytes20(o[0:20]));
         uint256 transferCount = uint256(uint248(bytes31(o[20:51])));
         uint256 totalSent = uint256(uint248(bytes31(o[51:82])));
-        uint256 earlisetTransferBlock = uint256(uint248(bytes31(o[82:113])));
-        return (userAddr, transferCount, totalSent, earlisetTransferBlock);
+        return (userAddr, transferCount, totalSent);
     }
 }
